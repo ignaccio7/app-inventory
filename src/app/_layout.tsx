@@ -1,18 +1,38 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { SplashScreen, Stack } from "expo-router";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import {
+  Raleway_600SemiBold,
+  Raleway_700Bold,
+} from "@expo-google-fonts/raleway";
+import { Roboto_400Regular, Roboto_500Medium } from "@expo-google-fonts/roboto";
+import { useFonts } from "expo-font";
+import { useEffect } from "react";
 
-SplashScreen.preventAutoHideAsync();
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+SplashScreen.preventAutoHideAsync()
+
+export default function RootLayout() {
+
+  const [loaded, error] = useFonts({
+    Raleway_600SemiBold,
+    Raleway_700Bold,
+    Roboto_400Regular,
+    Roboto_500Medium,
+  })
+
+  useEffect(() => {
+    if (loaded && !error) {
+      SplashScreen.hideAsync()
+    }
+  }, [loaded, error])
+
+  if (!loaded || error) {
+    return null
+  }
+
+  return <Stack
+    screenOptions={{
+      headerShown: false
+    }}
+  />;
 }
