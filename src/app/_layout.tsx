@@ -1,4 +1,5 @@
 import { SplashScreen, Stack } from "expo-router";
+import "../global.css";
 
 import {
   Raleway_600SemiBold,
